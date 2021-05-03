@@ -53,10 +53,10 @@
 <properties>
 
     <!-- The full path to your plugin's main class, so that Spigot can find and load it -->
-    <main.class>se.gustaf.learning.FirstPlugin</main.class>
+    <main.class>se.gustaf.learning.LearningPlugin</main.class>
 
     <!-- The Foundation version - change to latest version from https://github.com/kangarko/Foundation/releases -->
-    <foundation.version>5.1.4</foundation.version>
+    <foundation.version>5.8.2</foundation.version>
 
     <!-- The Java version your plugin uses, see bstats.org for what most servers have and use that -->
     <java.version>11</java.version>

@@ -1,8 +1,6 @@
 <component name="libraryTable">
   <library name="spigot-api-1.16.5-R0.1-20210424.223940-54-shaded">
-    <CLASSES>
-      <root url="jar://$USER_HOME$/javaLibs/spigot-api-1.16.5-R0.1-20210424.223940-54-shaded.jar!/" />
-    </CLASSES>
+    <CLASSES />
     <JAVADOC />
     <SOURCES />
   </library>
