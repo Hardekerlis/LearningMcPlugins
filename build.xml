@@ -10,26 +10,26 @@
 
     <!-- Your MC test server location for Windows -->
     <condition property="serverPath" value="\home\gustaf\DevMcServer">
-        <os family="windows" />
+        <os family="windows"/>
     </condition>
 
     <!-- Your MC test server location for Linux -->
-    <condition property="serverPath" value="\home\gustaf\DevMcServer">
-        <os family="unix" />
+    <condition property="serverPath" value="/home/gustaf/DevMcServer">
+        <os family="unix"/>
     </condition>
 
     <!-- Your MC test server location for macOS -->
     <condition property="serverPath" value="\home\gustaf\DevMcServer">
-        <os family="mac" />
+        <os family="mac"/>
     </condition>
 
     <!-- Ninja: Read your pom.xml file to find the Foundation version we will be using -->
-    <xmlproperty file="pom.xml" prefix="pom" keeproot="false" />
+    <xmlproperty file="pom.xml" prefix="pom" keeproot="false"/>
     <property name="foundation.version" value="${pom.properties.foundation.version}"/>
 
     <!-- Finally, compile the plugin -->
     <target name="Build">
-        <jar jarfile="${serverPath}\plugins\${ant.project.name}.jar" basedir="./target/classes/" includes="**/*">
+        <jar jarfile="${serverPath}\plugins\${ant.project.name}.jar" basedir="./target/classes" includes="**/*">
 
             <!--
                 Ant can include other plugin's classes however it cannot repackage them.

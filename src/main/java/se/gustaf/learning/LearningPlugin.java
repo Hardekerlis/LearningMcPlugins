@@ -8,9 +8,14 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.plugin.SimplePlugin;
+import se.gustaf.learning.command.*;
+import se.gustaf.learning.command.Orion.OrionCommandGroup;
 import se.gustaf.learning.event.PlayerListener;
+import se.gustaf.learning.event.ProjectileListener;
 
 public class LearningPlugin extends SimplePlugin {
+	
+	private BroadcasterTask broadcasterTask;
 	
 	@Override
 	protected void onPluginStart() {
@@ -18,12 +23,46 @@ public class LearningPlugin extends SimplePlugin {
 		// Dont!
 		getLogger().info("All works!");
 		System.out.println("All works from sout!");
-		
 		// Do!
 		Common.log("Hello from Foundation!");
 		
-		registerEvents(new PlayerListener());
+		// Tasks
+		broadcasterTask = new BroadcasterTask();
+		broadcasterTask.runTaskTimer(this, 0, 10 * 20);
+		
+		// Commands
 		registerCommand(new FireworkCommand());
+		registerCommand(new SpawnEntityCommand());
+		registerCommand(new PermCommand());
+		registerCommand(new TaskCommand());
+		registerCommand(new PreferencesCommand());
+		
+		// Command groups
+		registerCommands("orion|or", new OrionCommandGroup());
+		
+		registerEvents(new PlayerListener());
+		registerEvents(new ProjectileListener());
+	}
+	
+	@Override
+	protected void onPluginStop() {
+		cleanBeforeReload();
+	}
+	
+	@Override
+	protected void onPluginReload() {
+		cleanBeforeReload();
+	}
+	
+	private void cleanBeforeReload() {
+		if (broadcasterTask != null) {
+			try {
+				broadcasterTask.cancel();
+			} catch (final IllegalStateException ex) {
+			}
+			
+			broadcasterTask = null;
+		}
 	}
 	
 	@EventHandler

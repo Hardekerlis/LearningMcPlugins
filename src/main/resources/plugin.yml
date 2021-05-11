@@ -15,3 +15,6 @@ main: ${main.class}
 author: hardekerlis
 api-version: 1.13
 softdepend: [ ProtocolLib, Essentials, Vault, WorldEdit ]
+permissions:
+  orion.fire:
+    default: true
