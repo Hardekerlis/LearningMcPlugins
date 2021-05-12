@@ -1,0 +1,26 @@
+#
+# Welcome to the main settings file
+#
+# For help, visit <youradress>.com
+#
+
+Menu:
+  Preferences_Title: "&4User preferences"
+  Egg_Selection_Title: "Select a mob egg"
+  Chat_Color_Selection_Title: "Select a chat color"
+  Tools_Menu: "Admin tools"
+  Level_Menu: "Change your level"
+
+Join:
+  Give_Emerald: false
+
+Entity_Hit:
+  Explode_Cows: true
+  Power: 5
+
+Broadcaster_Delay: 20 seconds
+
+Debug: [ ]
+Prefix: "&f LearningPlugin &7//"
+Log_Lag_Over_Millis: 100
+Version: 1

@@ -1,11 +1,15 @@
 package se.gustaf.learning.event;
 
+import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.mineacademy.fo.Common;
+import se.gustaf.learning.PlayerCache;
+import se.gustaf.learning.rpg.PlayerClass;
 
 public class PlayerListener implements Listener {
 	
@@ -49,5 +53,31 @@ public class PlayerListener implements Listener {
 //
 //			event.setCancelled(true);
 //		}
+	}
+	
+	// --------------------------------------------------------
+	
+	@EventHandler
+	public void onPlayerChat2(final AsyncPlayerChatEvent event) {
+		final PlayerCache cache = PlayerCache.getCache(event.getPlayer());
+		
+		final ChatColor color = cache.getColor();
+		
+		if (color != null) {
+			event.setMessage(color + event.getMessage());
+		}
+	}
+	
+	// --------------------------------------------------------
+	
+	@EventHandler public void onPlayerJoin(final PlayerJoinEvent event) {
+		final PlayerCache cache = PlayerCache.getCache(event.getPlayer());
+		
+		final PlayerClass playerClass = cache.getPlayerClass();
+		
+		
+		if (playerClass != null) {
+			playerClass.applyFor(event.getPlayer());
+		}
 	}
 }

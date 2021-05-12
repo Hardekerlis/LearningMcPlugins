@@ -1,17 +1,25 @@
 package se.gustaf.learning;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Cow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.ItemStack;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.plugin.SimplePlugin;
+import org.mineacademy.fo.settings.YamlStaticConfig;
 import se.gustaf.learning.command.*;
 import se.gustaf.learning.command.Orion.OrionCommandGroup;
 import se.gustaf.learning.event.PlayerListener;
 import se.gustaf.learning.event.ProjectileListener;
+import se.gustaf.learning.rpg.ClassRegister;
+import se.gustaf.learning.settings.Settings;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class LearningPlugin extends SimplePlugin {
 	
@@ -28,7 +36,9 @@ public class LearningPlugin extends SimplePlugin {
 		
 		// Tasks
 		broadcasterTask = new BroadcasterTask();
-		broadcasterTask.runTaskTimer(this, 0, 10 * 20);
+		broadcasterTask.runTaskTimer(this, 0, Settings.BROADCASTER_DELAY.getTimeTicks());
+		
+		ClassRegister.getInstance().loadClasses();
 		
 		// Commands
 		registerCommand(new FireworkCommand());
@@ -36,6 +46,7 @@ public class LearningPlugin extends SimplePlugin {
 		registerCommand(new PermCommand());
 		registerCommand(new TaskCommand());
 		registerCommand(new PreferencesCommand());
+		registerCommand(new RpgCommand());
 		
 		// Command groups
 		registerCommands("orion|or", new OrionCommandGroup());
@@ -65,21 +76,27 @@ public class LearningPlugin extends SimplePlugin {
 		}
 	}
 	
+	@Override public List<Class<? extends YamlStaticConfig>> getSettings() {
+		return Arrays.asList(Settings.class);
+	}
+	
 	@EventHandler
 	public void onJoin(final PlayerJoinEvent event) {
 		final Player player = event.getPlayer();
 		
 		Common.tellLater(2, player, "&eHello &9from &cFoundation");
-
-//		player.getInventory().addItem(new ItemStack(Material.DIRT, 64));
+		
+		if (Settings.Join.GIVE_EMERALD) {
+			player.getInventory().addItem(new ItemStack(Material.EMERALD, 5));
+		}
 	}
 	
 	@EventHandler
 	public void onEntityDamage(final EntityDamageByEntityEvent event) {
 		final Entity victim = event.getEntity();
 		
-		if (event.getDamager() instanceof Player && victim instanceof Cow) {
-			victim.getWorld().createExplosion(victim.getLocation(), 5);
+		if ((event.getDamager() instanceof Player && victim instanceof Cow) && Settings.Entity_Hit.EXPLODE_COWS) {
+			victim.getWorld().createExplosion(victim.getLocation(), Settings.Entity_Hit.EXPLOSION_POWER.floatValue());
 		}
 	}
 }
