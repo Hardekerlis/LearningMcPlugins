@@ -25,6 +25,16 @@ public class ClassRegister {
 		loadedClasses.add(playerClass);
 	}
 	
+	public PlayerClass getClass(final String name) {
+		for (final PlayerClass loadedClass : loadedClasses) {
+			if (loadedClass.getName().equals(name)) {
+				return loadedClass;
+			}
+			
+		}
+		return null;
+	}
+	
 	public void loadClasses() {
 		loadedClasses.clear();
 		

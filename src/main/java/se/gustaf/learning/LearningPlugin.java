@@ -47,6 +47,7 @@ public class LearningPlugin extends SimplePlugin {
 		registerCommand(new TaskCommand());
 		registerCommand(new PreferencesCommand());
 		registerCommand(new RpgCommand());
+		registerCommand(new BoardingCommand());
 		
 		// Command groups
 		registerCommands("orion|or", new OrionCommandGroup());

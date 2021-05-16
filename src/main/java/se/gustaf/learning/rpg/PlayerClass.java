@@ -33,7 +33,8 @@ public class PlayerClass extends YamlConfig {
 		player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(hitCooldown);
 	}
 	
-	@Override public String getName() {
+	@Override
+	public String getName() {
 		return getFileName().replace(".yml", "");
 	}
 }

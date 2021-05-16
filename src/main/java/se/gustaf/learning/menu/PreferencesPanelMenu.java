@@ -15,12 +15,14 @@ import org.mineacademy.fo.menu.MenuPagged;
 import org.mineacademy.fo.menu.MenuQuantitable;
 import org.mineacademy.fo.menu.MenuTools;
 import org.mineacademy.fo.menu.button.Button;
+import org.mineacademy.fo.menu.button.ButtonConversation;
 import org.mineacademy.fo.menu.button.ButtonMenu;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.menu.model.MenuQuantity;
 import org.mineacademy.fo.remain.CompColor;
 import org.mineacademy.fo.remain.CompMaterial;
 import se.gustaf.learning.PlayerCache;
+import se.gustaf.learning.conversation.ExpPrompt;
 import se.gustaf.learning.rpg.ClassRegister;
 import se.gustaf.learning.rpg.PlayerClass;
 import se.gustaf.learning.settings.Settings;
@@ -41,6 +43,9 @@ public class PreferencesPanelMenu extends Menu {
 	private final Button levelButton;
 	private final Button toolsButton;
 	private final Button classesButton;
+	
+	private final Button expButton;
+	
 	
 	public PreferencesPanelMenu() {
 		
@@ -73,7 +78,6 @@ public class PreferencesPanelMenu extends Menu {
 			
 			private boolean isDay() {
 				return getViewer().getWorld().getFullTime() < 12500;
-				
 			}
 		};
 		
@@ -97,7 +101,7 @@ public class PreferencesPanelMenu extends Menu {
 		
 		levelButton = new ButtonMenu(
 				new LevelMenu(),
-				CompMaterial.EXPERIENCE_BOTTLE,
+				CompMaterial.ELYTRA,
 				"Level menu",
 				"",
 				"Click to open level",
@@ -121,32 +125,45 @@ public class PreferencesPanelMenu extends Menu {
 				"Click to open classes",
 				"menu to select your RPG class"
 		);
+		
+		expButton = new ButtonConversation(
+				new ExpPrompt(),
+				CompMaterial.EXPERIENCE_BOTTLE,
+				"Experience prompt",
+				"",
+				"Click to open a prompt",
+				"giving you experience levels."
+		);
 	}
 	
 	@Override
 	public ItemStack getItemAt(final int slot) {
-		if (slot == 9 * 1 + 2) {
+		if (slot == 9 * 1 + 1) {
 			return timeButton.getItem();
 		}
 		
-		if (slot == 9 * 1 + 4) {
+		if (slot == 9 * 1 + 3) {
 			return mobEggButton.getItem();
 		}
 		
-		if (slot == 9 * 1 + 6) {
+		if (slot == 9 * 1 + 5) {
 			return chatColorButton.getItem();
 		}
 		
-		if (slot == 9 * 3 + 2) {
+		if (slot == 9 * 1 + 7) {
 			return levelButton.getItem();
 		}
 		
-		if (slot == 9 * 3 + 4) {
+		if (slot == 9 * 3 + 1) {
 			return toolsButton.getItem();
 		}
 		
-		if (slot == 9 * 3 + 6) {
+		if (slot == 9 * 3 + 3) {
 			return classesButton.getItem();
+		}
+		
+		if (slot == 9 * 3 + 5) {
+			return expButton.getItem();
 		}
 		
 		
