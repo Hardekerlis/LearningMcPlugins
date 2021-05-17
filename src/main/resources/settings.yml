@@ -20,7 +20,12 @@ Entity_Hit:
 
 Broadcaster_Delay: 20 seconds
 
+Ignore_Log_Commands:
+  - /login
+  - /register
+  - /changepassword
+
 Debug: [ ]
-Prefix: "&f LearningPlugin &7//"
+Prefix: "&7[&fLearningPlugin&7] "
 Log_Lag_Over_Millis: 100
 Version: 1

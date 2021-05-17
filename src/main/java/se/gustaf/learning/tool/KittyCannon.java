@@ -3,17 +3,18 @@ package se.gustaf.learning.tool;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.bukkit.GameMode;
 import org.bukkit.entity.Cat;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.mineacademy.fo.Common;
-import org.mineacademy.fo.PlayerUtil;
+import org.mineacademy.fo.EntityUtil;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.menu.tool.Tool;
 import org.mineacademy.fo.remain.CompMaterial;
+import org.mineacademy.fo.remain.CompParticle;
+import org.mineacademy.fo.remain.CompSound;
+import se.gustaf.learning.util.LearningPluginUtil;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class KittyCannon extends Tool {
@@ -42,22 +43,27 @@ public class KittyCannon extends Tool {
 		}
 		
 		final Player player = event.getPlayer();
-		final ItemStack arrow = PlayerUtil.getFirstItem(player, KittyArrow.getInstance().getItem());
 		
-		if (arrow == null) {
-			Common.tell(player, "&cYou lack the Kitty Arrow required to shoot from this tool!");
-			
-			event.setCancelled(true);
+		if (!LearningPluginUtil.checkKittyArrow(player, event)) {
 			return;
 		}
 		
-		if (player.getGameMode() == GameMode.SURVIVAL) {
-			PlayerUtil.takeOnePiece(player, arrow);
-		}
-		
 		final Cat cat = player.getWorld().spawn(player.getEyeLocation(), Cat.class);
-
-//		cat.setVelocity();
+		
+		cat.setVelocity(player.getEyeLocation().getDirection().multiply(2.0D));
+		
+		CompSound.SUCCESSFUL_HIT.play(player);
+		
+		EntityUtil.trackFlying(cat, () -> {
+			CompParticle.BLOCK_CRACK.spawnWithData(cat.getLocation(), CompMaterial.TNT);
+		});
+		
+		EntityUtil.trackFalling(cat, () -> {
+			cat.remove();
+			cat.getWorld().createExplosion(cat.getLocation(), 4F);
+			
+			CompSound.ANVIL_LAND.play(player.getLocation());
+		});
 	}
 	
 	@Override

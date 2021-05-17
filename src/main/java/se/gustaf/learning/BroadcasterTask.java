@@ -22,7 +22,7 @@ public class BroadcasterTask extends BukkitRunnable {
 		final String prefix = "&8[&4Tip&8] &7";
 		final String message = RandomUtil.nextItem(messages);
 		for (final Player player : Remain.getOnlinePlayers()) {
-			Common.tell(player, prefix + message);
+			Common.tellNoPrefix(player, prefix + message);
 		}
 	}
 }

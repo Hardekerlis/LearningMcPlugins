@@ -1,6 +1,7 @@
 package se.gustaf.learning.event;
 
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -8,8 +9,12 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.mineacademy.fo.Common;
+import org.mineacademy.fo.FileUtil;
+import org.mineacademy.fo.TimeUtil;
+import org.mineacademy.fo.Valid;
 import se.gustaf.learning.PlayerCache;
 import se.gustaf.learning.rpg.PlayerClass;
+import se.gustaf.learning.settings.Settings;
 
 public class PlayerListener implements Listener {
 	
@@ -46,26 +51,39 @@ public class PlayerListener implements Listener {
 	
 	@EventHandler
 	public void onPlayerCommand(final PlayerCommandPreprocessEvent event) {
-		Common.log("Message " + event.getMessage());
+//		Common.log("Message " + event.getMessage());
 // 		TODO Not a good way to stop /plugins, give players negative plugin permission instead
 //		if (event.getMessage().equalsIgnoreCase("/plugins")) {
 //			Common.tell(event.getPlayer(), "You cannot view plugins, well you can but differently..");
 //
 //			event.setCancelled(true);
 //		}
+		
+		final Player player = event.getPlayer();
+		final String message = event.getMessage();
+		
+		if (!Valid.isInListStartsWith(message, Settings.IGNORED_LOG_COMMANDS)) {
+			final String commandLogMessage = "[" + TimeUtil.getFormattedDate() + "] " + player.getName() + ": " + Common.stripColors(message);
+			FileUtil.write("commands.log", commandLogMessage);
+			FileUtil.write("logs/" + player.getName() + ".log", commandLogMessage);
+		}
 	}
 	
 	// --------------------------------------------------------
 	
 	@EventHandler
 	public void onPlayerChat2(final AsyncPlayerChatEvent event) {
+		final Player player = event.getPlayer();
 		final PlayerCache cache = PlayerCache.getCache(event.getPlayer());
-		
 		final ChatColor color = cache.getColor();
 		
 		if (color != null) {
 			event.setMessage(color + event.getMessage());
 		}
+		
+		final String logMessage = "[" + TimeUtil.getFormattedDate() + "] " + player.getName() + ": " + Common.stripColors(event.getMessage());
+		FileUtil.write("logs/" + player.getName() + ".log", logMessage);
+		FileUtil.write("common-chat.log", logMessage);
 	}
 	
 	// --------------------------------------------------------

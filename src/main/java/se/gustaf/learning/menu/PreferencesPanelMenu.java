@@ -26,8 +26,7 @@ import se.gustaf.learning.conversation.ExpPrompt;
 import se.gustaf.learning.rpg.ClassRegister;
 import se.gustaf.learning.rpg.PlayerClass;
 import se.gustaf.learning.settings.Settings;
-import se.gustaf.learning.tool.DiamondChangingTool;
-import se.gustaf.learning.tool.HellfireRocket;
+import se.gustaf.learning.tool.*;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -320,13 +319,13 @@ public class PreferencesPanelMenu extends Menu {
 	private final class ToolsMenu extends MenuTools {
 		private ToolsMenu() {
 			super(PreferencesPanelMenu.this);
-			setSize(9 * 3);
+//			setSize(9 * 3);
 			setTitle(Settings.Menu.MENU_TOOLS_TITLE);
 		}
 		
 		@Override protected Object[] compileTools() {
 			return new Object[]{
-					HellfireRocket.getInstance(), DiamondChangingTool.getInstance()
+					HellfireRocket.getInstance(), DiamondChangingTool.getInstance(), KittyCannon.getInstance(), KittyArrow.getInstance(), KittyBow.getInstance()
 			};
 		}
 		

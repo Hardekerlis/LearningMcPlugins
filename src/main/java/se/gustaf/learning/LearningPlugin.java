@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.fo.settings.YamlStaticConfig;
+import se.gustaf.learning.boss.BossListener;
 import se.gustaf.learning.command.*;
 import se.gustaf.learning.command.Orion.OrionCommandGroup;
 import se.gustaf.learning.event.PlayerListener;
@@ -48,12 +49,19 @@ public class LearningPlugin extends SimplePlugin {
 		registerCommand(new PreferencesCommand());
 		registerCommand(new RpgCommand());
 		registerCommand(new BoardingCommand());
+		registerCommand(new BossCommand());
 		
 		// Command groups
 		registerCommands("orion|or", new OrionCommandGroup());
 		
+		// Listeners
 		registerEvents(new PlayerListener());
 		registerEvents(new ProjectileListener());
+		registerEvents(new BossListener());
+		
+		// Prefix
+		Common.ADD_LOG_PREFIX = true;
+		Common.ADD_TELL_PREFIX = true;
 	}
 	
 	@Override

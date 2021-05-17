@@ -3,6 +3,8 @@ package se.gustaf.learning.settings;
 import org.mineacademy.fo.model.SimpleTime;
 import org.mineacademy.fo.settings.SimpleSettings;
 
+import java.util.List;
+
 public class Settings extends SimpleSettings {
 	
 	@Override protected int getConfigVersion() {
@@ -57,10 +59,12 @@ public class Settings extends SimpleSettings {
 	}
 	
 	public static SimpleTime BROADCASTER_DELAY;
+	public static List<String> IGNORED_LOG_COMMANDS;
 	
 	private static void init() {
 		pathPrefix(null);
 		
 		BROADCASTER_DELAY = getTime("Broadcaster_Delay");
+		IGNORED_LOG_COMMANDS = getStringList("Ignore_Log_Commands");
 	}
 }

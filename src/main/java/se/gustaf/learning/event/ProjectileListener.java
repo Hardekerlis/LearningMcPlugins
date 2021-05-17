@@ -36,7 +36,7 @@ public class ProjectileListener implements Listener {
 							return;
 						}
 						
-						CompParticle.EXPLOSION_HUGE.spawn(shot.getLocation());
+						CompParticle.FIREWORKS_SPARK.spawn(shot.getLocation());
 					}
 				}.runTaskTimer(LearningPlugin.getInstance(), 0, 1);
 			}
